@@ -1,0 +1,39 @@
+{
+  "shopName": "Super Game Arena",
+  "homeTown": "Warszawa",
+  "street": "Przykładowa 12",
+  "formed": 2016,
+  "active": true,
+  "products": [
+    {
+      "name": "Molecule Man",
+      "price": 24.05,
+      "quantity": 4,
+      "platform": "ps4",
+      "genre": [ "action", "first person shooter", "adventure" ]
+    },
+    {
+      "name": "Madame Uppercut",
+      "price": 39.99,
+      "quantity": 2,
+      "platform": "xsx",
+      "genre": [
+        "strategy",
+        "simulation",
+        "casual"
+      ]
+    },
+    {
+      "name": "Eternal Flame",
+      "price": 50.00,
+      "quantity": 10,
+      "platform": "pc",
+      "genre": [
+        "rpg",
+        "adventure",
+        "action",
+        "logic"
+      ]
+    }
+  ]
+}
