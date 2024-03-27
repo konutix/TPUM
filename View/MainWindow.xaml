@@ -4,10 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
+        xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=local:MainWindow}"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding}" />
+        Title="Sklep" Height="450" Width="800">
+
+    <Window.DataContext>
+        <vm:ShopViewModel/>
+    </Window.DataContext>
+    
+    <Grid Background="Azure">
+        <TextBlock Text="{Binding homeTown}"/>
     </Grid>
+    
 </Window>
