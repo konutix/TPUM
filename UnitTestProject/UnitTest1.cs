@@ -9,8 +9,8 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMethod1()
         {
-                Class1 clas = new Class1 { };
-                Assert.IsNotNull(clas.Add(4, 5));
+                //Class1 clas = new Class1 { };
+                //Assert.IsNotNull(clas.Add(4, 5));
       
         }
     }

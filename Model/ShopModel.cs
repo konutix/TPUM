@@ -12,11 +12,11 @@ namespace Model
 {
     public class ShopModel
     {
-        private IShop Shop { get; set; }    
+        private ILogicLayer Shop { get; set; }    
 
-        public ShopModel(IShop shop)
+        public ShopModel(ILogicLayer logicLayer)
         {
-            Shop = shop;
+            Shop = logicLayer;
 
         }
 
@@ -40,9 +40,10 @@ namespace Model
         public List<ProductModel> GetGames()
         {
             List<ProductModel> games = new List<ProductModel>();
-            foreach (ProductModel game in Shop.GetProducts())
+            foreach (int iter in Shop.GetProductIds())
             {
-                games.Add(new ProductModel(game.name, game.price, game.quantity, game.platform, game.genres));
+                Shop.GetProductById(iter, out string name, out float price, out int quantity, out string platform, out string genre);
+                games.Add(new ProductModel(name, price, quantity, platform, genre));
             }
             return games;
         }
