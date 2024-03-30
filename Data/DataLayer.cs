@@ -101,16 +101,24 @@ namespace Data
             active = shopData.active;
         }
 
-        public override void RemoveProduct(int id, int quant)
+        public override bool RemoveProduct(int id, int quant)
         {
+            bool success = false;
+
             foreach (Product p in shopData.products)
             {
                 if (id == p.id)
                 {
-                    p.quantity -= quant;
+                    if (p.quantity >= quant)
+                    {
+                        p.quantity -= quant;
+                        success = true;
+                    }
                     break;
                 }
             }
+
+            return success;
         }
 
         public override void SetShopData(string shopName, string homeTown, string street, int formed, bool active)

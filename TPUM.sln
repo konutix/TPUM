@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Viewt", "Viewt\Viewt.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataUnitTests", "DataUnitTests\DataUnitTests.csproj", "{BFF694ED-9957-4CA9-9BD9-3DDDE9469547}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicUnitTests", "LogicUnitTests\LogicUnitTests.csproj", "{1EB37A23-7D44-4BA6-91B3-25E2C0C889D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{BFF694ED-9957-4CA9-9BD9-3DDDE9469547}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFF694ED-9957-4CA9-9BD9-3DDDE9469547}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFF694ED-9957-4CA9-9BD9-3DDDE9469547}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EB37A23-7D44-4BA6-91B3-25E2C0C889D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EB37A23-7D44-4BA6-91B3-25E2C0C889D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EB37A23-7D44-4BA6-91B3-25E2C0C889D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EB37A23-7D44-4BA6-91B3-25E2C0C889D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
