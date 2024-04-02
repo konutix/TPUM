@@ -6,31 +6,41 @@
         xmlns:local="clr-namespace:View"
         xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
-        Title="Sklep" Height="450" Width="800">
+        Title="Sklep" Height="auto" Width="auto">
 
-    <!--<Window.DataContext>
-        <vm:ShopViewModel/>
-    </Window.DataContext>-->
+    <Window.DataContext>
+        <vm:ShopViewModel />
+    </Window.DataContext>
 
     <Grid Background="AliceBlue">
-        <Canvas Width="1300" Height="600" x:Name="MainView" Visibility="Visible">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Canvas Width="1300" Height="600" x:Name="MainView" Visibility="Visible" Grid.Row="0">
             <StackPanel Orientation="Horizontal">
                 <ScrollViewer VerticalScrollBarVisibility="Hidden" Height="450">
                     <ItemsControl ItemsSource="{Binding Games}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <!--<Button Width="800" Height="100" Margin="40 10" Command="{Binding Path=DataContext.WeaponButtonClick, RelativeSource={RelativeSource AncestorType=ItemsControl}, Mode=Default}" CommandParameter="{Binding Id}">-->
+                                <Button Width="800" Height="100" Margin="40 10" Command="{Binding Path=DataContext.ProductButtonClick, RelativeSource={RelativeSource AncestorType=ItemsControl}, Mode=Default}" CommandParameter="{Binding ID}">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <TextBlock VerticalAlignment="Center" FontSize="25" Margin="50 0" Text="{Binding name}"></TextBlock>
-                                    <TextBlock VerticalAlignment="Center" FontSize="25" Margin="50 0" Text="{Binding price, StringFormat='0. PLN'}"></TextBlock>
+                                    <TextBlock VerticalAlignment="Center" FontSize="25" Margin="50 0" Text="{Binding Name}"></TextBlock>
+                                    <TextBlock VerticalAlignment="Center" FontSize="25" Margin="50 0" Text="{Binding Price, StringFormat='0. PLN'}"></TextBlock>
+                                    <TextBlock VerticalAlignment="Center" FontSize="25" Margin="50 0" Text="{Binding Quantity}"></TextBlock>
                                 </StackPanel>
-                                <!--</Button>-->
+                                </Button>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
             </StackPanel>
         </Canvas>
+        <Button Width="800" Height="100" HorizontalAlignment="Center" Grid.Row="1" Command="{Binding Path=BuyButtonClick, Mode=Default}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <TextBlock VerticalAlignment="Center" FontSize="25" Margin="50 0" Text="Kup"></TextBlock>
+            </StackPanel>
+        </Button>
     </Grid>
 
 </Window>

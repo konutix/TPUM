@@ -15,6 +15,9 @@ namespace Model
         {
             return new ModelApi(logicLayer ?? ILogicLayer.CreateLogicLayer());
         }
+        public abstract List<ProductModel> BuyList {get; }  
+
+        //public abstract void RemoveProduct
     }
 
     internal class ModelApi : ModelAbstractApi
@@ -25,6 +28,10 @@ namespace Model
         }
 
         public override ShopModel ShopModel => new ShopModel(logicLayer);
+
+        public override List<ProductModel> BuyList => new List<ProductModel>();
+
+        //public override 
 
         private ILogicLayer logicLayer;
 

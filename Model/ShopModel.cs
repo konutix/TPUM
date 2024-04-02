@@ -7,18 +7,20 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Logic;
+using System.Collections.ObjectModel;
 
 namespace Model
 {
     public class ShopModel
     {
-        private ILogicLayer Shop { get; set; }    
+        private ILogicLayer Shop { get; set; }
 
         public ShopModel(ILogicLayer logicLayer)
         {
             Shop = logicLayer;
 
         }
+
 
         //public string shopName { get; set; }
         //public string homeTown { get; set; }
@@ -35,7 +37,13 @@ namespace Model
         //    public string platform { get; set; }
         //    public string[] genre { get; set; }
         //}
-
+        public void RemoveProducts(List<ProductModel> BuyList)
+        {
+            foreach (ProductModel product in BuyList)
+            {
+                Shop.RemoveProduct(product.ID, 1);
+            }
+        }
 
         public List<ProductModel> GetGames()
         {
@@ -43,11 +51,11 @@ namespace Model
             foreach (int iter in Shop.GetProductIds())
             {
                 Shop.GetProductById(iter, out string name, out float price, out int quantity, out string platform, out string genre);
-                games.Add(new ProductModel(name, price, quantity, platform, genre));
+                games.Add(new ProductModel(iter, name, price, quantity, platform, genre));
             }
             return games;
         }
 
-        
+
     }
 }

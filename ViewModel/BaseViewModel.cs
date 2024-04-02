@@ -11,7 +11,7 @@ namespace ViewModel
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
-        private ModelAbstractApi modelAbstractApi;
+        //private ModelAbstractApi modelAbstractApi;
 
         #region INotifyPropertyChanged
 

@@ -11,22 +11,25 @@ namespace Model
 {
     public class ProductModel : INotifyPropertyChanged
     {
-        public ProductModel(string name, float price, int quantity, string platform, string genres)
+        public ProductModel() { }
+        public ProductModel(int id, string name, float price, int quantity, string platform, string genre)
         {
-            this.name = name;
-            this.price = price;
-            this.quantity = quantity;
-            this.platform = platform;
-            this.genre = genre;
+            ID = id;
+            Name = name;
+            Price = price;
+            Quantity = quantity;
+            Platform = platform;
+            Genre = genre;
         }
 
-        public string name { get; set; }
-        public float price { get; set; }
-        public int quantity { get; set; }
-        public string platform { get; set; }
-        public string genre { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public float Price { get; set; }
+        public int Quantity { get; set; }
+        public string Platform { get; set; }
+        public string Genre { get; set; }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
