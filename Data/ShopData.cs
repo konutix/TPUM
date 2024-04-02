@@ -40,6 +40,10 @@ namespace Data
                 {
                     found = true;
                 }
+                else
+                {
+                    newUniqueId += 1;
+                }
             }
 
             products.Add(new Product(newUniqueId, name, price, quantity, platform, genre));
