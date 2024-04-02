@@ -18,11 +18,10 @@ namespace ViewModel
         {
             ModelLayer = ModelAbstractApi.CreateApi();
             games = new ObservableCollection<ProductModel>();
-            buyList = ModelLayer.BuyList;
-            BuyList = new List<ProductModel>();
+            shopInst = ModelLayer.ShopModel;
             foreach (ProductModel game in ModelLayer.ShopModel.GetGames())
             {
-                games.Add(game);
+                Games.Add(game);
             }
 
             BuyButtonClick = new RelayCommand(BuyButtonClickHandler);
@@ -51,25 +50,25 @@ namespace ViewModel
             }
         }
 
-        public List<ProductModel> BuyList
+        public ShopModel ShopInst
         {
             get
             {
-                return buyList;
+                return shopInst;
             }
             set
             {
-                if (value.Equals(buyList))
+                if (value.Equals(shopInst))
                     return;
-                buyList = value;
-                RaisePropertyChanged("BuyList");
+                shopInst = value;
+                RaisePropertyChanged("ShopInst");
             }
         }
 
         private void BuyButtonClickHandler()
         {
-            ModelLayer.ShopModel.RemoveProducts(BuyList);
-            BuyList.Clear();
+            ShopInst.RemoveProducts();  
+            ShopInst.BuyList.Clear();
             Games.Clear();
             foreach (ProductModel product in ModelLayer.ShopModel.GetGames())
             {
@@ -79,11 +78,11 @@ namespace ViewModel
 
         private void ProductButtonClickHandler(int id)
         {
-            BuyList.Add(Games.Where(d => d.ID == id).First());
+            ShopInst.BuyList.Add(Games.Where(d => d.ID == id).First());
         }
 
         private ObservableCollection<ProductModel> games;
-        private List<ProductModel> buyList;
+        private ShopModel shopInst;
         private ModelAbstractApi ModelLayer;
 
     }

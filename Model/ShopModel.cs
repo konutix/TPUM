@@ -18,9 +18,10 @@ namespace Model
         public ShopModel(ILogicLayer logicLayer)
         {
             Shop = logicLayer;
-
+            BuyList = new List<ProductModel> { };   
         }
 
+        public List<ProductModel> BuyList { get; set; }
 
         //public string shopName { get; set; }
         //public string homeTown { get; set; }
@@ -29,15 +30,7 @@ namespace Model
         //public bool active { get; set; }
         //public Product[] products { get; set; }
 
-        //public class Product
-        //{
-        //    public string name { get; set; }
-        //    public float price { get; set; }
-        //    public int quantity { get; set; }
-        //    public string platform { get; set; }
-        //    public string[] genre { get; set; }
-        //}
-        public void RemoveProducts(List<ProductModel> BuyList)
+        public void RemoveProducts()
         {
             foreach (ProductModel product in BuyList)
             {
