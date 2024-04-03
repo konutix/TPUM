@@ -11,6 +11,7 @@ namespace Data
     internal class DataLayer : IDataLayer
     {
         private ShopData shopData;
+        private bool initialDataDrawn = false;
 
         public DataLayer()
         {
@@ -20,14 +21,18 @@ namespace Data
 
         public override void DrawData()
         {
-            shopData.shopName = "GameShop1";
-            shopData.homeTown = "Lodz";
-            shopData.street = "Politechniki";
-            shopData.formed = 1111;
-            shopData.active = true;
-            shopData.AddProduct("Wiedzmak", 70.0f, 15, "PC", "ARPG");
-            shopData.AddProduct("Wiedzmak 2", 150.0f, 10, "PC", "ARPG");
-            shopData.AddProduct("Szyberpunk 2033", 210.0f, 21, "PS5", "FPS-RPG");
+            if (!initialDataDrawn)
+            {
+                shopData.shopName = "GameShop1";
+                shopData.homeTown = "Lodz";
+                shopData.street = "Politechniki";
+                shopData.formed = 1111;
+                shopData.active = true;
+                shopData.AddProduct("Wiedzmak", 70.0f, 15, "PC", "ARPG");
+                shopData.AddProduct("Wiedzmak 2", 150.0f, 10, "PC", "ARPG");
+                shopData.AddProduct("Szyberpunk 2033", 210.0f, 21, "PS5", "FPS-RPG");
+                initialDataDrawn = true;
+            }
         }
 
         public override void AddExistingProduct(int id, int quant)
