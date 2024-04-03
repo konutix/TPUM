@@ -9,8 +9,19 @@ namespace LogicUnitTests
         [TestMethod]
         public void LogicTesting()
         {
-            ILogicLayer dataLayer = ILogicLayer.CreateLogicLayer(new DataInject());
-            Assert.IsNotNull(dataLayer);
+            ILogicLayer logicLayer = ILogicLayer.CreateLogicLayer(new DataInject());
+            Assert.IsNotNull(logicLayer);
+
+            string name;
+            float price;
+            int quantity;
+            string platform;
+            string genre;
+
+            logicLayer.GetProductById(0, out name, out price, out quantity, out platform, out genre);
+
+            Assert.AreEqual(price, 37.0f);
+            Assert.AreEqual(quantity, 10.0f);
         }
     }
 

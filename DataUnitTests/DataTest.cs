@@ -13,8 +13,6 @@ namespace DataUnitTests
             IDataLayer dataLayer = IDataLayer.CreateDataLayer();
             Assert.IsNotNull(dataLayer);
 
-            dataLayer.DrawData();
-
             string name;
             float price;
             int quantity;

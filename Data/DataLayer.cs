@@ -15,6 +15,7 @@ namespace Data
         public DataLayer()
         {
             shopData = new ShopData();
+            DrawData();
         }
 
         public override void DrawData()
