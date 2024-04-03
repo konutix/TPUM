@@ -25,6 +25,7 @@ namespace View
         {
             InitializeComponent();
             ShopViewModel _vm = (ShopViewModel)DataContext;
+            InformationSender IS = new InformationSender(_vm);
         }
     }
 }

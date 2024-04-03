@@ -17,7 +17,11 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Canvas Width="1300" Height="600" x:Name="MainView" Visibility="Visible" Grid.Row="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Canvas Width="900" Height="600" x:Name="MainView" Visibility="Visible" Grid.Row="0" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <ScrollViewer VerticalScrollBarVisibility="Hidden" Height="450">
                     <ItemsControl ItemsSource="{Binding Games}">
@@ -41,6 +45,7 @@
                 <TextBlock VerticalAlignment="Center" FontSize="25" Margin="50 0" Text="Kup"></TextBlock>
             </StackPanel>
         </Button>
+        <TextBlock x:Name="Notification" Width="200" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1"  Visibility="{Binding NotificationVisibility}">Zakup jakąś grę</TextBlock>
     </Grid>
 
 </Window>

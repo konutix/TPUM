@@ -19,6 +19,8 @@ namespace ViewModel
             ModelLayer = ModelAbstractApi.CreateApi();
             games = new ObservableCollection<ProductModel>();
             shopInst = ModelLayer.ShopModel;
+            NotificationVisibility = "hidden";
+            Start = 0;
             foreach (ProductModel game in ModelLayer.ShopModel.GetGames())
             {
                 Games.Add(game);
@@ -26,14 +28,9 @@ namespace ViewModel
 
             BuyButtonClick = new RelayCommand(BuyButtonClickHandler);
             ProductButtonClick = new RelayCommand<int>(ProductButtonClickHandler);
-
+            NotificationVisibilityTime = new RelayCommand(NotificationVisibilityHandler);
 
         }
-
-        public ICommand ProductButtonClick { get; set; }
-        public ICommand BuyButtonClick { get; set; }
-
-
 
         public ObservableCollection<ProductModel> Games
         {
@@ -64,10 +61,48 @@ namespace ViewModel
                 RaisePropertyChanged("ShopInst");
             }
         }
+        public string NotificationVisibility
+        {
+            get
+            {
+                return notificationVisibility;
+            }
+            set
+            {
+                if (value.Equals(notificationVisibility))
+                    return;
+                notificationVisibility = value;
+                RaisePropertyChanged("NotificationVisibility");
+            }
+        }
+
+        public int Start
+        {
+            get
+            {
+                return start;
+            }
+            set
+            {
+                if (value.Equals(start))
+                    return;
+                start = value;
+                RaisePropertyChanged("Start");
+            }
+        }
+
+        public ICommand ProductButtonClick { get; set; }
+        public ICommand BuyButtonClick { get; set; }
+        public ICommand NotificationVisibilityTime { get; set; }
+
+        private void NotificationVisibilityHandler()
+        {
+            NotificationVisibility = "Visible";
+        }
 
         private void BuyButtonClickHandler()
         {
-            ShopInst.RemoveProducts();  
+            ShopInst.RemoveProducts();
             ShopInst.BuyList.Clear();
             Games.Clear();
             foreach (ProductModel product in ModelLayer.ShopModel.GetGames())
@@ -79,10 +114,14 @@ namespace ViewModel
         private void ProductButtonClickHandler(int id)
         {
             ShopInst.BuyList.Add(Games.Where(d => d.ID == id).First());
+            NotificationVisibility = "Hidden";
+            Start = DateTime.Now.Second;
         }
 
         private ObservableCollection<ProductModel> games;
         private ShopModel shopInst;
+        private string notificationVisibility;
+        private int start;
         private ModelAbstractApi ModelLayer;
 
     }
