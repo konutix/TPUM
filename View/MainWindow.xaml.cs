@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using ViewModel;
 
 namespace View
@@ -25,7 +26,8 @@ namespace View
         {
             InitializeComponent();
             ShopViewModel _vm = (ShopViewModel)DataContext;
-            InformationSender IS = new InformationSender(_vm);
+            IS = new InformationSender(_vm);
         }
+        public InformationSender IS { get; set; }  
     }
 }

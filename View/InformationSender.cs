@@ -10,19 +10,19 @@ using ViewModel;
 
 namespace View
 {
-    public class InformationSender : Window
+    public class InformationSender
     {
         public InformationSender(ShopViewModel vm)
         {
             this.vm = vm;
-            DispatcherTimer dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += dispatcherTimer_Tick;
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
             vm.Start = DateTime.Now.Second;
             dispatcherTimer.Start();
         }
 
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        internal void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             if (DateTime.Now.Second - vm.Start > 10)
             {
@@ -30,7 +30,9 @@ namespace View
             }
             CommandManager.InvalidateRequerySuggested();
         }
-        private ShopViewModel vm;  
+
+        private ShopViewModel vm;
+        internal DispatcherTimer dispatcherTimer;
     }
 }
 
