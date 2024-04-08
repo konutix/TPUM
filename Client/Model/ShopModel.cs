@@ -8,20 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Logic;
 using System.Collections.ObjectModel;
+using Model;
 
 namespace Model
 {
-    public class ShopModel
+    public class ShopModel : IShopModel
     {
         private ILogicLayer Shop { get; set; }
 
         public ShopModel(ILogicLayer logicLayer)
         {
             Shop = logicLayer;
-            BuyList = new List<ProductModel> { };   
+            BuyList = new List<IProductModel> { };   
         }
 
-        public List<ProductModel> BuyList { get; set; }
+        public List<IProductModel> BuyList { get; set; }
 
         //public string shopName { get; set; }
         //public string homeTown { get; set; }
@@ -32,15 +33,15 @@ namespace Model
 
         public void RemoveProducts()
         {
-            foreach (ProductModel product in BuyList)
+            foreach (IProductModel product in BuyList)
             {
                 Shop.RemoveProduct(product.ID, 1);
             }
         }
 
-        public List<ProductModel> GetGames()
+        public List<IProductModel> GetGames()
         {
-            List<ProductModel> games = new List<ProductModel>();
+            List<IProductModel> games = new List<IProductModel>();
             foreach (int iter in Shop.GetProductIds())
             {
                 Shop.GetProductById(iter, out string name, out float price, out int quantity, out string platform, out string genre);

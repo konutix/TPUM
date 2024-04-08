@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class ProductModel : INotifyPropertyChanged
+    internal class ProductModel : IProductModel, INotifyPropertyChanged
     {
         public ProductModel() { }
         public ProductModel(int id, string name, float price, int quantity, string platform, string genre)
