@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ViewModel\ViewModel.csproj" />
+    <ProjectReference Include="..\ViewModel\ViewModelClient.csproj" />
   </ItemGroup>
 
 </Project>
