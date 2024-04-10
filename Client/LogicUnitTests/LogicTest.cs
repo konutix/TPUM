@@ -1,5 +1,5 @@
-using Data;
-using Logic;
+using ClientData;
+using ClientLogic;
 
 namespace LogicUnitTests
 {
@@ -27,6 +27,10 @@ namespace LogicUnitTests
 
     internal class DataInject : IDataLayer
     {
+        public override event EventHandler? ItemsChanged;
+        public override event EventHandler? TransactionFailed;
+        public override event EventHandler? TransactionSucceeded;
+
         public override void AddExistingProduct(int id, int quant){}
 
         public override void AddNewProduct(string name, float price, int quantity, string platform, string genre){}
@@ -61,6 +65,11 @@ namespace LogicUnitTests
         public override bool RemoveProduct(int id, int quant)
         {
             return true;
+        }
+
+        public override void RemoveProducts(List<int> ids)
+        {
+            throw new NotImplementedException();
         }
 
         public override void SetShopData(string shopName, string homeTown, string street, int formed, bool active){}

@@ -1,11 +1,12 @@
-﻿using Data;
+﻿using ClientData;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic
+namespace ClientLogic
 {
     internal class LogicLayer : ILogicLayer
     {
@@ -18,7 +19,25 @@ namespace Logic
         public LogicLayer(IDataLayer data)
         {
             Data = data;
+            Data.ItemsChanged += Data_ItemsChanged;
+            Data.TransactionFailed += Data_TransactionFailed;
+            Data.TransactionSucceeded += Data_TransactionSucceeded;
             Data.DrawData();
+        }
+
+        private void Data_TransactionSucceeded(object? sender, EventArgs e)
+        {
+            ItemsChanged?.Invoke(this, e);
+        }
+
+        private void Data_TransactionFailed(object? sender, EventArgs e)
+        {
+            TransactionFailed?.Invoke(this, e);
+        }
+
+        private void Data_ItemsChanged(object? sender, EventArgs e)
+        {
+            TransactionSucceeded?.Invoke(this, e);
         }
 
         public List<int> GetProductIds()
@@ -73,6 +92,11 @@ namespace Logic
         public void SetShopData(string shopName, string homeTown, string street, int formed, bool active)
         {
             Data.SetShopData(shopName, homeTown, street, formed, active);
+        }
+
+        public void RemoveProducts(List<int> ids)
+        {
+            Data.RemoveProducts(ids);
         }
     }
 }

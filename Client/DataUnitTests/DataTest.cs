@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Data;
+using ClientData;
 using System.Diagnostics;
 
 namespace DataUnitTests

@@ -1,11 +1,10 @@
-﻿using Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 
-namespace Data
+namespace ClientData
 {
     internal class ShopData
     {

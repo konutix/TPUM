@@ -36,6 +36,21 @@ namespace ViewModel
             ProductButtonClick = new RelayCommand<int>(ProductButtonClickHandler);
             NotificationVisibilityTime = new RelayCommand(NotificationVisibilityHandler);
 
+            shopInst.ItemsChanged += ShopInst_ItemsChanged;
+        }
+
+        private void ShopInst_ItemsChanged(object? sender, EventArgs e)
+        {
+            Games = new ObservableCollection<IProductViewModel>();
+            foreach (IProductModel game in shopInst.GetGames())
+            {
+                Games.Add(new ProductViewModel(game.ID,
+                                               game.Name,
+                                               game.Price,
+                                               game.Quantity,
+                                               game.Platform,
+                                               game.Genre));
+            }
         }
 
         public ObservableCollection<IProductViewModel> Games
@@ -107,16 +122,6 @@ namespace ViewModel
         {
             ShopInst.RemoveProducts();
             ShopInst.BuyList.Clear();
-            Games.Clear();
-            foreach (IProductModel product in ModelLayer.ShopModel.GetGames())
-            {
-                Games.Add(new ProductViewModel(product.ID,
-                                               product.Name,
-                                               product.Price,
-                                               product.Quantity,
-                                               product.Platform,
-                                               product.Genre));
-            }
         }
 
         private void ProductButtonClickHandler(int id)

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using Logic;
+using ClientLogic;
 using System.Collections.ObjectModel;
 using Model;
 
@@ -14,12 +14,35 @@ namespace Model
 {
     public class ShopModel : IShopModel
     {
+        public event EventHandler ItemsChanged;
+        public event EventHandler TransactionFailed;
+        public event EventHandler TransactionSucceeded;
+
         private ILogicLayer Shop { get; set; }
 
         public ShopModel(ILogicLayer logicLayer)
         {
             Shop = logicLayer;
-            BuyList = new List<IProductModel> { };   
+            BuyList = new List<IProductModel> { };
+
+            Shop.ItemsChanged += Shop_ItemsChanged;
+            Shop.TransactionFailed += Shop_TransactionFailed;
+            Shop.TransactionSucceeded += Shop_TransactionSucceeded;
+        }
+
+        private void Shop_TransactionSucceeded(object? sender, EventArgs e)
+        {
+            ItemsChanged?.Invoke(this, e);
+        }
+
+        private void Shop_TransactionFailed(object? sender, EventArgs e)
+        {
+            TransactionFailed?.Invoke(this, e);
+        }
+
+        private void Shop_ItemsChanged(object? sender, EventArgs e)
+        {
+            TransactionSucceeded?.Invoke(this, e);
         }
 
         public List<IProductModel> BuyList { get; set; }
@@ -33,10 +56,14 @@ namespace Model
 
         public void RemoveProducts()
         {
+            List<int> ids = new List<int>();
+
             foreach (IProductModel product in BuyList)
             {
-                Shop.RemoveProduct(product.ID, 1);
+                ids.Add(product.ID);
             }
+
+            Shop.RemoveProducts(ids);
         }
 
         public List<IProductModel> GetGames()
