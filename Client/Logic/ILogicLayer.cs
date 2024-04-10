@@ -9,6 +9,10 @@ namespace Logic
 {
     public interface ILogicLayer
     {
+        public event EventHandler ItemsChanged;
+        public event EventHandler TransactionFailed;
+        public event EventHandler TransactionSucceeded;
+
         public static ILogicLayer CreateLogicLayer(IDataLayer data = default(IDataLayer))
         {
             return new LogicLayer(data == null ? IDataLayer.CreateDataLayer() : data);

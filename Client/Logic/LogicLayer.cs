@@ -9,6 +9,10 @@ namespace Logic
 {
     internal class LogicLayer : ILogicLayer
     {
+        public event EventHandler ItemsChanged;
+        public event EventHandler TransactionFailed;
+        public event EventHandler TransactionSucceeded;
+
         private IDataLayer Data { get; }
 
         public LogicLayer(IDataLayer data)

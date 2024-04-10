@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 namespace Data
 {
     public abstract class IDataLayer
-    { 
+    {
+        public event EventHandler ItemsChanged;
+        public event EventHandler TransactionFailed;
+        public event EventHandler TransactionSucceeded;
+
         public static IDataLayer CreateDataLayer()
         {
             return new DataLayer();

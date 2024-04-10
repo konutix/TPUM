@@ -8,7 +8,12 @@ namespace Data
 {
     internal class Product
     {
-        internal Product(int id, string name, float price, int quantity, string platform, string genre)
+        public Product()
+        {
+
+        }
+
+        public Product(int id, string name, float price, int quantity, string platform, string genre)
         {
             this.id = id;
             this.name = name;
@@ -18,11 +23,11 @@ namespace Data
             this.genre = genre;
         }
 
-        internal int id { get; set; }
-        internal int quantity { get; set; }
-        internal string name { get; set; }
-        internal float price { get; set; }
-        internal string platform { get; set; }
-        internal string genre { get; set; }
+        public int id { get; set; }
+        public int quantity { get; set; }
+        public string name { get; set; }
+        public float price { get; set; }
+        public string platform { get; set; }
+        public string genre { get; set; }
     }
 }

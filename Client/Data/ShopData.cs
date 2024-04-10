@@ -9,13 +9,14 @@ namespace Data
 {
     internal class ShopData
     {
-        internal ShopData()
+        public ShopData()
         {
             shopName = "empty";
             homeTown = "empty";
             street = "empty";
             formed = 0;
             active = false;
+            lastTransaction = "";
             products = new List<Product>();
         }
 
@@ -49,11 +50,12 @@ namespace Data
             products.Add(new Product(newUniqueId, name, price, quantity, platform, genre));
         }
 
-        internal string shopName { get; set; }
-        internal string homeTown { get; set; }
-        internal string street { get; set; }
-        internal int formed { get; set; }
-        internal bool active { get; set; }
-        internal List<Product> products { get; set; }
+        public string shopName { get; set; }
+        public string homeTown { get; set; }
+        public string street { get; set; }
+        public int formed { get; set; }
+        public bool active { get; set; }
+        public string lastTransaction { get; set; }
+        public List<Product> products { get; set; }
     }
 }

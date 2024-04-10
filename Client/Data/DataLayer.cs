@@ -1,15 +1,21 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using WebSocketSharp;
 
 namespace Data
 {
     internal class DataLayer : IDataLayer
     {
+        public event EventHandler ItemsChanged;
+        public event EventHandler TransactionFailed;
+        public event EventHandler TransactionSucceeded;
+
         private ShopData shopData;
         private bool initialDataDrawn = false;
 
@@ -23,16 +29,35 @@ namespace Data
         {
             if (!initialDataDrawn)
             {
-                shopData.shopName = "GameShop1";
-                shopData.homeTown = "Lodz";
-                shopData.street = "Politechniki";
-                shopData.formed = 1111;
-                shopData.active = true;
-                shopData.AddProduct("Wiedzmak", 70.0f, 15, "PC", "ARPG");
-                shopData.AddProduct("Wiedzmak 2", 150.0f, 10, "PC", "ARPG");
-                shopData.AddProduct("Szyberpunk 2033", 210.0f, 21, "PS5", "FPS-RPG");
                 initialDataDrawn = true;
+
+                ShopData sendShop = new ShopData();
+
+                sendShop.shopName = "GameShop1";
+                sendShop.homeTown = "Lodz";
+                sendShop.street = "Politechniki";
+                sendShop.formed = 1111;
+                sendShop.active = true;
+                sendShop.AddProduct("Wiedzmak", 70.0f, 15, "PC", "ARPG");
+                sendShop.AddProduct("Wiedzmak 2", 150.0f, 10, "PC", "ARPG");
+                sendShop.AddProduct("Szyberpunk 2033", 210.0f, 21, "PS5", "FPS-RPG");
+
+                //WEBSOCK
+                WebSocket webSocket = new WebSocket("ws://wise-olive-narwhal.glitch.me//");
+
+                webSocket.OnMessage += WebSocket_OnMessage;
+
+                webSocket.Connect();
+                string message = JsonConvert.SerializeObject(sendShop);
+                webSocket.Send(message);
+
             }
+        }
+
+        //WEBSOCK FUNC
+        private void WebSocket_OnMessage(object? sender, MessageEventArgs e)
+        {
+            shopData = JsonConvert.DeserializeObject<ShopData>(e.Data);
         }
 
         public override void AddExistingProduct(int id, int quant)
