@@ -9,8 +9,6 @@ namespace ClientData
     public abstract class IDataLayer
     {
         public abstract event EventHandler ItemsChanged;
-        public abstract event EventHandler TransactionFailed;
-        public abstract event EventHandler TransactionSucceeded;
 
         public static IDataLayer CreateDataLayer()
         {

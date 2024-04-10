@@ -11,8 +11,6 @@ namespace ClientLogic
     internal class LogicLayer : ILogicLayer
     {
         public event EventHandler ItemsChanged;
-        public event EventHandler TransactionFailed;
-        public event EventHandler TransactionSucceeded;
 
         private IDataLayer Data { get; }
 
@@ -20,24 +18,12 @@ namespace ClientLogic
         {
             Data = data;
             Data.ItemsChanged += Data_ItemsChanged;
-            Data.TransactionFailed += Data_TransactionFailed;
-            Data.TransactionSucceeded += Data_TransactionSucceeded;
             Data.DrawData();
-        }
-
-        private void Data_TransactionSucceeded(object? sender, EventArgs e)
-        {
-            ItemsChanged?.Invoke(this, e);
-        }
-
-        private void Data_TransactionFailed(object? sender, EventArgs e)
-        {
-            TransactionFailed?.Invoke(this, e);
         }
 
         private void Data_ItemsChanged(object? sender, EventArgs e)
         {
-            TransactionSucceeded?.Invoke(this, e);
+            ItemsChanged?.Invoke(this, e);
         }
 
         public List<int> GetProductIds()

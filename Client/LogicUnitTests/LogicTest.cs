@@ -28,8 +28,6 @@ namespace LogicUnitTests
     internal class DataInject : IDataLayer
     {
         public override event EventHandler? ItemsChanged;
-        public override event EventHandler? TransactionFailed;
-        public override event EventHandler? TransactionSucceeded;
 
         public override void AddExistingProduct(int id, int quant){}
 

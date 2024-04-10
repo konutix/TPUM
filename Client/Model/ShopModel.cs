@@ -15,8 +15,6 @@ namespace Model
     public class ShopModel : IShopModel
     {
         public event EventHandler ItemsChanged;
-        public event EventHandler TransactionFailed;
-        public event EventHandler TransactionSucceeded;
 
         private ILogicLayer Shop { get; set; }
 
@@ -26,23 +24,11 @@ namespace Model
             BuyList = new List<IProductModel> { };
 
             Shop.ItemsChanged += Shop_ItemsChanged;
-            Shop.TransactionFailed += Shop_TransactionFailed;
-            Shop.TransactionSucceeded += Shop_TransactionSucceeded;
-        }
-
-        private void Shop_TransactionSucceeded(object? sender, EventArgs e)
-        {
-            ItemsChanged?.Invoke(this, e);
-        }
-
-        private void Shop_TransactionFailed(object? sender, EventArgs e)
-        {
-            TransactionFailed?.Invoke(this, e);
         }
 
         private void Shop_ItemsChanged(object? sender, EventArgs e)
         {
-            TransactionSucceeded?.Invoke(this, e);
+            ItemsChanged?.Invoke(this, e);
         }
 
         public List<IProductModel> BuyList { get; set; }

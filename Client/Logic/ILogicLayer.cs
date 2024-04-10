@@ -10,8 +10,6 @@ namespace ClientLogic
     public interface ILogicLayer
     {
         public abstract event EventHandler ItemsChanged;
-        public abstract event EventHandler TransactionFailed;
-        public abstract event EventHandler TransactionSucceeded;
 
         public static ILogicLayer CreateLogicLayer(IDataLayer data = default(IDataLayer))
         {

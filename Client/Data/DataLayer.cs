@@ -13,8 +13,6 @@ namespace ClientData
     internal class DataLayer : IDataLayer
     {
         public override event EventHandler ItemsChanged;
-        public override event EventHandler TransactionFailed;
-        public override event EventHandler TransactionSucceeded;
 
         private ShopData shopData;
         private bool initialDataDrawn = false;
