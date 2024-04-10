@@ -21,13 +21,16 @@ namespace Model
         {
             Shop = logicLayer;
             BuyList = new List<IProductModel> { };
-
+            Shop.GetTransactionStatus(out string lastTransaction);
+            this.lastTransaction = lastTransaction;
             Shop.ItemsChanged += Shop_ItemsChanged;
         }
 
         private void Shop_ItemsChanged(object? sender, EventArgs e)
         {
             ItemsChanged?.Invoke(this, e);
+            Shop.GetTransactionStatus(out string lastTransaction);
+            this.lastTransaction = lastTransaction;
         }
 
         public List<IProductModel> BuyList { get; set; }
@@ -38,6 +41,7 @@ namespace Model
         //public int formed { get; set; }
         //public bool active { get; set; }
         //public Product[] products { get; set; }
+        public string lastTransaction { get; set; }
 
         public void RemoveProducts()
         {
@@ -62,6 +66,12 @@ namespace Model
             return games;
         }
 
+        public string ChangeTransactionStatus()
+        {   
+            Shop.GetTransactionStatus(out string lastTransaction);
+            this.lastTransaction = lastTransaction;
+            return lastTransaction;
+        }
 
     }
 }

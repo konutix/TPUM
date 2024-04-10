@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -83,6 +84,11 @@ namespace ClientLogic
         public void RemoveProducts(List<int> ids)
         {
             Data.RemoveProducts(ids);
+        }
+
+        public void GetTransactionStatus(out string lastTransaction)
+        {
+            Data.GetTransactionStatus(out lastTransaction);
         }
     }
 }

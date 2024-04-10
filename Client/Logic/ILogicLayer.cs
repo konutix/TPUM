@@ -25,5 +25,6 @@ namespace ClientLogic
         public abstract void ChangePrice(int id, float newPrice);
         public abstract void GetShopData(out string shopName, out string homeTown, out string street, out int formed, out bool active);
         public abstract void SetShopData(string shopName, string homeTown, string street, int formed, bool active);
+        public abstract void GetTransactionStatus(out string lastTransaction);
     }
 }

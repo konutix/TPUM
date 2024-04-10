@@ -19,7 +19,7 @@ namespace PresentationServer
         }
         protected override void OnMessage(MessageEventArgs e)
         {
-            Console.WriteLine("Reciewed: " + e.Data + "\n");
+            Console.WriteLine("Recieved: " + e.Data + "\n");
             List<int> ids = new List<int>();
             ids = JsonConvert.DeserializeObject<List<int>>(e.Data);
             
@@ -28,6 +28,7 @@ namespace PresentationServer
                 _serverinst.logicLayer.RemoveProduct(id,1);
             }
             _serverinst.Send(_serverinst.logicLayer);
+
             Console.WriteLine("Sent: " + _serverinst.message + "\n");
             Send(_serverinst.message);
         }

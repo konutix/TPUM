@@ -71,5 +71,9 @@ namespace LogicUnitTests
         }
 
         public override void SetShopData(string shopName, string homeTown, string street, int formed, bool active){}
+        public override void GetTransactionStatus(out string lastTransaction)
+        {
+            lastTransaction = "update";
+        }
     }
 }

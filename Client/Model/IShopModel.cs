@@ -4,7 +4,8 @@
     {
         public abstract event EventHandler ItemsChanged;
 
-        public List<IProductModel> BuyList { get; set; }    
+        public List<IProductModel> BuyList { get; set; }
+        public string lastTransaction { get; set; }
 
         public void RemoveProducts();
 

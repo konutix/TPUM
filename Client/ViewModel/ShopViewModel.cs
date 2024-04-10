@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Model;
 
@@ -18,8 +19,8 @@ namespace ViewModel
         {
             ModelLayer = ModelAbstractApi.CreateApi();
             games = new ObservableCollection<IProductViewModel>();
-
             shopInst = ModelLayer.ShopModel;
+            LastTransaction = shopInst.lastTransaction;
             NotificationVisibility = "hidden";
             Start = 0;
             foreach (IProductModel game in shopInst.GetGames())
@@ -51,6 +52,7 @@ namespace ViewModel
                                                game.Platform,
                                                game.Genre));
             }
+            LastTransaction = shopInst.ChangeTransactionStatus();
         }
 
         public ObservableCollection<IProductViewModel> Games
@@ -108,6 +110,21 @@ namespace ViewModel
                 RaisePropertyChanged("Start");
             }
         }
+        
+        public string LastTransaction
+        {
+            get
+            {
+                return lastTransaction;
+            }
+            set
+            {
+                if (value.Equals(lastTransaction))
+                    return;
+                lastTransaction = value;
+                RaisePropertyChanged("LastTransaction");
+            }
+        }
 
         public ICommand ProductButtonClick { get; set; }
         public ICommand BuyButtonClick { get; set; }
@@ -130,7 +147,8 @@ namespace ViewModel
             NotificationVisibility = "Hidden";
             Start = DateTime.Now.Second;
         }
-
+        //[ObservablePropertyAttribute]
+        private string lastTransaction;
         private ObservableCollection<IProductViewModel> games;
         private ShopModel shopInst;
         private string notificationVisibility;

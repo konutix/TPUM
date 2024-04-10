@@ -198,5 +198,10 @@ namespace ClientData
             shopData.formed = formed;
             shopData.active = active;
         }
+
+        public override void GetTransactionStatus(out string lastTransaction)
+        {
+            lastTransaction = shopData.lastTransaction;
+        }
     }
 }
