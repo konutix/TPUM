@@ -18,6 +18,7 @@ namespace ClientData
         private bool initialDataDrawn = false;
 
         WebSocket webSocket;
+        WebSocket webSocket2;
 
         public DataLayer()
         {
@@ -43,11 +44,14 @@ namespace ClientData
                 sendShop.AddProduct("Szyberpunk 2033", 210.0f, 21, "PS5", "FPS-RPG");
 
                 //WEBSOCK
-                webSocket = new WebSocket("ws://127.0.0.1:5000");
+                webSocket = new WebSocket("ws://127.0.0.1:5000/ServerInit");
+                webSocket2 = new WebSocket("ws://127.0.0.1:5000/ServerBroadcast");
 
                 webSocket.OnMessage += WebSocket_OnMessage;
+                webSocket2.OnMessage += WebSocket_OnMessage;
 
                 webSocket.Connect();
+                webSocket2.Connect();
                 string message = JsonConvert.SerializeObject(sendShop);
                //webSocket.Send(message);
 

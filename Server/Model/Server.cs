@@ -7,6 +7,8 @@ using Logic;
 using Newtonsoft.Json;
 using WebSocketSharp;
 using WebSocketSharp.Server;
+using System.Timers;
+using System.Data;
 
 namespace PresentationServer
 {
@@ -40,6 +42,32 @@ namespace PresentationServer
             Send(_serverinst.message);
         }
     }
+    internal class ServerBroadcast : WebSocketBehavior
+    {
+        private Server _serverinst;
+        public ServerBroadcast(Server serverinst)
+        {
+            _serverinst = serverinst;
+            Update();
+        }
+
+        internal void Update()
+        {
+            System.Timers.Timer UpdateTimer = new System.Timers.Timer(10000);
+            UpdateTimer.Elapsed += Broadcast;
+            UpdateTimer.AutoReset = true;   
+            UpdateTimer.Enabled = true;
+        }
+        internal void Broadcast(Object source, ElapsedEventArgs e)
+        {
+            
+            _serverinst.Send(_serverinst.logicLayer, "update");
+            Console.WriteLine("Sent: " + _serverinst.message + "\n");
+            Sessions.Broadcast(_serverinst.message);
+        }
+        
+    }
+
     internal class Server
     {
         //internal static ILogicLayer logicLayer {get;set;}
@@ -53,16 +81,27 @@ namespace PresentationServer
             sendShop = new ShopDTO();
 
             UpdateData(logicLayer, "update");
-
             message = JsonConvert.SerializeObject(sendShop);
 
             WebSocketServer webSocketServer = new WebSocketServer("ws://127.0.0.1:5000");
-            webSocketServer.AddWebSocketService<ServerInit>("/", () => new ServerInit(this));
+            webSocketServer.AddWebSocketService<ServerInit>("/ServerInit", () => new ServerInit(this));
+            webSocketServer.AddWebSocketService<ServerBroadcast>("/ServerBroadcast", () => new ServerBroadcast(this));
+            //ServerBroadcast broadcast = new ServerBroadcast(this);
+            //Update(broadcast);
             webSocketServer.Start();
             Console.WriteLine("Server started on ws://127.0.0.1:5000");
             Console.ReadKey();
             webSocketServer.Stop();
         }
+
+        internal void Update(ServerBroadcast broadcast)
+        {
+            System.Timers.Timer UpdateTimer = new System.Timers.Timer(2000);
+            UpdateTimer.Elapsed += broadcast.Broadcast;
+            UpdateTimer.AutoReset = true;
+            UpdateTimer.Enabled = true;
+        }
+
         static async Task Main()
         {
             ILogicLayer logicLayer = ILogicLayer.CreateLogicLayer();
