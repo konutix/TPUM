@@ -98,13 +98,14 @@ namespace Data
             return ids;
         }
 
-        public override void GetShopData(out string shopName, out string homeTown, out string street, out int formed, out bool active)
+        public override void GetShopData(out string shopName, out string homeTown, out string street, out int formed, out bool active, out string transaction)
         {
             shopName = shopData.shopName;
             homeTown = shopData.homeTown;
             street = shopData.street;
             formed = shopData.formed;
             active = shopData.active;
+            transaction = shopData.lastTransaction;
         }
 
         public override bool RemoveProduct(int id, int quant)

@@ -49,13 +49,14 @@ namespace LogicUnitTests
             return new List<int>();
         }
 
-        public override void GetShopData(out string shopName, out string homeTown, out string street, out int formed, out bool active)
+        public override void GetShopData(out string shopName, out string homeTown, out string street, out int formed, out bool active, out string transaction)
         {
             shopName = "testName";
             homeTown = "testTown";
             street = "testStreet";
             formed = 2024;
             active = true;
+            transaction = "update";
         }
 
         public override bool RemoveProduct(int id, int quant)

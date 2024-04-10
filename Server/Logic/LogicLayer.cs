@@ -61,14 +61,62 @@ namespace Logic
             }
         }
 
-        public void GetShopData(out string shopName, out string homeTown, out string street, out int formed, out bool active)
+        public void GetShopData(out string shopName, out string homeTown, out string street, out int formed, out bool active, out string transaction)
         {
-            Data.GetShopData(out shopName, out homeTown, out street, out formed, out active);
+            Data.GetShopData(out shopName, out homeTown, out street, out formed, out active, out transaction);
         }
 
         public void SetShopData(string shopName, string homeTown, string street, int formed, bool active)
         {
             Data.SetShopData(shopName, homeTown, street, formed, active);
+        }
+
+        private class IdQuant
+        {
+            public int id;
+            public int quant;
+
+            public IdQuant(int i, int q) { id = i; quant = q; }
+        }
+        public bool checkTransaction(List<int> ids)
+        {
+            List<int> productIds = GetProductIds();
+            List<IdQuant> idQuants = new List<IdQuant>();
+
+            foreach(int id in productIds)
+            {
+                string name;
+                float price;
+                int quantity;
+                string platform;
+                string genre;
+
+                GetProductById(id, out name, out price, out quantity, out platform, out genre);
+
+                idQuants.Add(new IdQuant(id, quantity));
+            }
+
+            bool valid = true;
+
+            foreach (int id in ids)
+            {
+                foreach (IdQuant prod in idQuants)
+                {
+                    if(prod.id == id)
+                    {
+                        if(prod.quant > 0)
+                        {
+                            prod.quant -= 1;
+                        }
+                        else
+                        {
+                            valid = false;
+                        }
+                    }
+                }
+            }
+
+            return valid;
         }
     }
 }

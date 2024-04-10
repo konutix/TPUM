@@ -55,5 +55,6 @@ namespace Data
         internal int formed { get; set; }
         internal bool active { get; set; }
         internal List<Product> products { get; set; }
+        internal string lastTransaction { get; set; }
     }
 }
