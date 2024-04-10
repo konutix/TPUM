@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ClientLogic;
 using System.Collections.ObjectModel;
-using Model;
 
 namespace Model
 {

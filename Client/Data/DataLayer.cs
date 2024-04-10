@@ -43,13 +43,13 @@ namespace ClientData
                 sendShop.AddProduct("Szyberpunk 2033", 210.0f, 21, "PS5", "FPS-RPG");
 
                 //WEBSOCK
-                webSocket = new WebSocket("ws://wise-olive-narwhal.glitch.me//");
+                webSocket = new WebSocket("ws://127.0.0.1:5000");
 
                 webSocket.OnMessage += WebSocket_OnMessage;
 
                 webSocket.Connect();
                 string message = JsonConvert.SerializeObject(sendShop);
-                webSocket.Send(message);
+               //webSocket.Send(message);
 
             }
         }
@@ -155,38 +155,38 @@ namespace ClientData
 
         public override void RemoveProducts(List<int> ids)
         {
-            //FOR SELF SUFICIENCY ONLY
-            ShopData sendShop = new ShopData();
-            sendShop.shopName = "GameShop1";
-            sendShop.homeTown = "Lodz";
-            sendShop.street = "Politechniki";
-            sendShop.formed = 1111;
-            sendShop.active = true;
-            sendShop.lastTransaction = "success";
-            sendShop.AddProduct("Wiedzmak", 70.0f, 15, "PC", "ARPG");
-            sendShop.AddProduct("Wiedzmak 2", 150.0f, 10, "PC", "ARPG");
-            sendShop.AddProduct("Szyberpunk 2033", 210.0f, 21, "PS5", "FPS-RPG");
-            foreach (int id in ids)
-            {
-                foreach (Product p in shopData.products)
-                {
-                    if (id == p.id)
-                    {
-                        if (p.quantity >= 1)
-                        {
-                            p.quantity -= 1;
-                        }
-                        else
-                        {
-                            sendShop.lastTransaction = "fail";
-                        }
-                        break;
-                    }
-                }
-            }
+            ////FOR SELF SUFICIENCY ONLY
+            //ShopData sendShop = new ShopData();
+            //sendShop.shopName = "GameShop1";
+            //sendShop.homeTown = "Lodz";
+            //sendShop.street = "Politechniki";
+            //sendShop.formed = 1111;
+            //sendShop.active = true;
+            //sendShop.lastTransaction = "success";
+            //sendShop.AddProduct("Wiedzmak", 70.0f, 15, "PC", "ARPG");
+            //sendShop.AddProduct("Wiedzmak 2", 150.0f, 10, "PC", "ARPG");
+            //sendShop.AddProduct("Szyberpunk 2033", 210.0f, 21, "PS5", "FPS-RPG");
+            //foreach (int id in ids)
+            //{
+            //    foreach (Product p in shopData.products)
+            //    {
+            //        if (id == p.id)
+            //        {
+            //            if (p.quantity >= 1)
+            //            {
+            //                p.quantity -= 1;
+            //            }
+            //            else
+            //            {
+            //                sendShop.lastTransaction = "fail";
+            //            }
+            //            break;
+            //        }
+            //    }
+            //}
 
-            //string message = JsonConvert.SerializeObject(ids); -- correct final version
-            string message = JsonConvert.SerializeObject(shopData); //temporary
+            string message = JsonConvert.SerializeObject(ids);
+            //string message = JsonConvert.SerializeObject(shopData); //temporary
             webSocket.Send(message);
         }
 
