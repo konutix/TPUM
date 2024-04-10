@@ -23,11 +23,19 @@ namespace PresentationServer
             List<int> ids = new List<int>();
             ids = JsonConvert.DeserializeObject<List<int>>(e.Data);
             
-            foreach (int id in ids)
+            if(_serverinst.logicLayer.checkTransaction(ids))
             {
-                _serverinst.logicLayer.RemoveProduct(id,1);
+                foreach (int id in ids)
+                {
+                    _serverinst.logicLayer.RemoveProduct(id, 1);
+                }
+                _serverinst.Send(_serverinst.logicLayer, "success");
             }
-            _serverinst.Send(_serverinst.logicLayer);
+            else
+            {
+                _serverinst.Send(_serverinst.logicLayer, "fail");
+            }
+
             Console.WriteLine("Sent: " + _serverinst.message + "\n");
             Send(_serverinst.message);
         }
@@ -44,7 +52,7 @@ namespace PresentationServer
             products = new List<ProductDTO>();
             sendShop = new ShopDTO();
 
-            UpdateData(logicLayer);
+            UpdateData(logicLayer, "update");
 
             message = JsonConvert.SerializeObject(sendShop);
 
@@ -68,21 +76,21 @@ namespace PresentationServer
             shopData = JsonConvert.DeserializeObject<ShopDTO>(e.Data);
         }
 
-        internal async void Send(ILogicLayer logicLayer)
+        internal async void Send(ILogicLayer logicLayer, string transactionResult)
         {
-            UpdateData(logicLayer);
+            UpdateData(logicLayer, transactionResult);
             message = JsonConvert.SerializeObject(sendShop);
         }
 
-        internal void UpdateData(ILogicLayer logicLayer)
+        internal void UpdateData(ILogicLayer logicLayer, string transactionResult)
         {
-            logicLayer.GetShopData(out string shopName, out string homeTown, out string street, out int formed, out bool active);
+            logicLayer.GetShopData(out string shopName, out string homeTown, out string street, out int formed, out bool active, out string transaction);
             sendShop.shopName = shopName;
             sendShop.homeTown = homeTown;
             sendShop.street = street;
             sendShop.formed = formed;
             sendShop.active = active;
-            sendShop.lastTransaction = "update";
+            sendShop.lastTransaction = transactionResult;
             productIDS = logicLayer.GetProductIds();
             sendShop.products = GetGames();
         }

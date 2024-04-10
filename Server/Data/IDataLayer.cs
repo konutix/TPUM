@@ -20,7 +20,7 @@ namespace Data
         public abstract List<int> GetProductIds();
         public abstract void GetProductById(int id, out string name, out float price, out int quantity, out string platform, out string genre);
         public abstract void ChangePrice(int id, float newPrice);
-        public abstract void GetShopData(out string shopName, out string homeTown, out string street, out int formed, out bool active);
+        public abstract void GetShopData(out string shopName, out string homeTown, out string street, out int formed, out bool active, out string transaction);
         public abstract void SetShopData(string shopName, string homeTown, string street, int formed, bool active);
     }
 }
