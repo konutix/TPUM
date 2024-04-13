@@ -70,9 +70,9 @@ namespace ViewModel
             }
         }
 
-        public ShopModel ShopInst
+        public IShopModel ShopInst
         {
-            get => (ShopModel)shopInst;
+            get => (IShopModel)shopInst;
             set
             {
                 if (value.Equals(shopInst))
@@ -150,7 +150,7 @@ namespace ViewModel
         //[ObservablePropertyAttribute]
         private string lastTransaction;
         private ObservableCollection<IProductViewModel> games;
-        private ShopModel shopInst;
+        private IShopModel shopInst;
         private string notificationVisibility;
         private int start;
         private ModelAbstractApi ModelLayer;

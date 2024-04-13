@@ -94,13 +94,6 @@ namespace PresentationServer
             webSocketServer.Stop();
         }
 
-        internal void Update(ServerBroadcast broadcast)
-        {
-            System.Timers.Timer UpdateTimer = new System.Timers.Timer(2000);
-            UpdateTimer.Elapsed += broadcast.Broadcast;
-            UpdateTimer.AutoReset = true;
-            UpdateTimer.Enabled = true;
-        }
 
         static async Task Main()
         {

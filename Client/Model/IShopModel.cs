@@ -8,7 +8,7 @@
         public string lastTransaction { get; set; }
 
         public void RemoveProducts();
-
         public List<IProductModel> GetGames();
+        public string ChangeTransactionStatus();
     }
 }

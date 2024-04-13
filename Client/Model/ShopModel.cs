@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 
 namespace Model
 {
-    public class ShopModel : IShopModel
+    internal class ShopModel : IShopModel
     {
         public event EventHandler ItemsChanged;
 

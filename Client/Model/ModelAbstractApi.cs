@@ -10,7 +10,7 @@ namespace Model
 {
     public abstract class ModelAbstractApi
     {
-        public abstract ShopModel ShopModel { get; }
+        public abstract IShopModel ShopModel { get; }
         public static ModelAbstractApi CreateApi(ILogicLayer logicLayer = default(ILogicLayer))
         {
             return new ModelApi(logicLayer ?? ILogicLayer.CreateLogicLayer());
@@ -24,7 +24,7 @@ namespace Model
             this.logicLayer = logicLayer;
         }
 
-        public override ShopModel ShopModel => new ShopModel(logicLayer);
+        public override IShopModel ShopModel => new ShopModel(logicLayer);
         private ILogicLayer logicLayer;
 
     }
