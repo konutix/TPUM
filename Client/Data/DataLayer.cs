@@ -10,19 +10,25 @@ using WebSocketSharp;
 
 namespace ClientData
 {
-    internal class DataLayer : IDataLayer
+    internal class DataLayer : IDataLayer, IObservable<Product>, IObserver<Product>
     {
         public override event EventHandler ItemsChanged;
 
         private ShopData shopData;
         private bool initialDataDrawn = false;
+        private MessageEventArgs eargs;
+        public List<IObserver<Product>> observers { get; set; }
 
         WebSocket webSocket;
         WebSocket webSocket2;
 
+        private IDisposable unsubscriber;
+
         public DataLayer()
         {
+            observers = new List<IObserver<Product>>();
             shopData = new ShopData();
+            Subscribe(this);
             DrawData();
         }
 
@@ -53,7 +59,7 @@ namespace ClientData
                 webSocket.Connect();
                 webSocket2.Connect();
                 string message = JsonConvert.SerializeObject(sendShop);
-               //webSocket.Send(message);
+                //webSocket.Send(message);
 
             }
         }
@@ -61,15 +67,27 @@ namespace ClientData
         //WEBSOCK FUNC
         private void WebSocket_OnMessage(object? sender, MessageEventArgs e)
         {
+            eargs = e;
             shopData = JsonConvert.DeserializeObject<ShopData>(e.Data);
-            ItemsChanged.Invoke(this, e);
+            if (observers.Count() == 0)
+            {
+                ItemsChanged.Invoke(this, e);
+            }
+            else
+            {
+                foreach (var observer in observers)
+                    foreach (Product product in shopData.products)
+                    {
+                        observer.OnNext(product);
+                    }
+            }
         }
 
         public override void AddExistingProduct(int id, int quant)
         {
-            foreach(Product p in shopData.products)
+            foreach (Product p in shopData.products)
             {
-                if(id == p.id)
+                if (id == p.id)
                 {
                     p.quantity += quant;
                     break;
@@ -80,6 +98,7 @@ namespace ClientData
         public override void AddNewProduct(string name, float price, int quantity, string platform, string genre)
         {
             shopData.AddProduct(name, price, quantity, platform, genre);
+
         }
 
         public override void ChangePrice(int id, float newPrice)
@@ -206,6 +225,51 @@ namespace ClientData
         public override void GetTransactionStatus(out string lastTransaction)
         {
             lastTransaction = shopData.lastTransaction;
+        }
+
+        void IObserver<Product>.OnCompleted()
+        {
+            this.Unsunscribe();
+        }
+
+        void IObserver<Product>.OnError(Exception error)
+        {
+        }
+
+        void IObserver<Product>.OnNext(Product value)
+        {
+            //if (this.shopData.products.Where(p => p.id == value.id) != null)
+            {
+                ItemsChanged.Invoke(this, eargs);
+            }
+        }
+
+        private void Unsunscribe()
+        {
+            unsubscriber.Dispose();
+        }
+        public IDisposable Subscribe(IObserver<Product> observer)
+        {
+            if (!observers.Contains(observer))
+                observers.Add(observer);
+            return new Unsubscriber(observers, observer);
+        }
+        private class Unsubscriber : IDisposable
+        {
+            private List<IObserver<Product>> _observers;
+            private IObserver<Product> _observer;
+
+            public Unsubscriber(List<IObserver<Product>> observers, IObserver<Product> observer)
+            {
+                this._observers = observers;
+                this._observer = observer;
+            }
+
+            public void Dispose()
+            {
+                if (_observer != null && _observers.Contains(_observer))
+                    _observers.Remove(_observer);
+            }
         }
     }
 }
