@@ -14,6 +14,7 @@ namespace ClientLogic
         public event EventHandler ItemsChanged;
 
         private IDataLayer Data { get; }
+        private bool Locked = false;
 
         public LogicLayer(IDataLayer data)
         {
@@ -89,6 +90,16 @@ namespace ClientLogic
         public void GetTransactionStatus(out string lastTransaction)
         {
             Data.GetTransactionStatus(out lastTransaction);
+        }
+
+        public bool IsLocked()
+        {
+            return Locked;
+        }
+
+        public void SetLocked(bool l)
+        {
+            Locked = l;
         }
     }
 }

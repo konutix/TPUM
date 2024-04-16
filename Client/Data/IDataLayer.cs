@@ -15,6 +15,11 @@ namespace ClientData
             return new DataLayer();
         }
 
+        public static IDataLayer CreateDataLayer(bool Observe)
+        {
+            return new DataLayer(Observe);
+        }
+
         public abstract void DrawData();
         public abstract void AddNewProduct(string name, float price, int quantity, string platform, string genre);
         public abstract void AddExistingProduct(int id, int quant);

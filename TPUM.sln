@@ -39,7 +39,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelClient", "Client\Model
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicServer", "Server\Logic\LogicServer.csproj", "{E77A1042-DDFF-4770-9BBA-E180E2BBB5DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonSchemaValidator", "JsonSchemaValidator\JsonSchemaValidator.csproj", "{15E32AE6-4202-4929-A861-8738603F0199}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonSchemaValidator", "JsonSchemaValidator\JsonSchemaValidator.csproj", "{15E32AE6-4202-4929-A861-8738603F0199}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTest", "IntegrationTest\IntegrationTest.csproj", "{5CE6B835-BED0-4100-A937-BEA0E2F4AA27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,10 @@ Global
 		{15E32AE6-4202-4929-A861-8738603F0199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15E32AE6-4202-4929-A861-8738603F0199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15E32AE6-4202-4929-A861-8738603F0199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CE6B835-BED0-4100-A937-BEA0E2F4AA27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CE6B835-BED0-4100-A937-BEA0E2F4AA27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CE6B835-BED0-4100-A937-BEA0E2F4AA27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CE6B835-BED0-4100-A937-BEA0E2F4AA27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

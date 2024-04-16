@@ -23,5 +23,7 @@ namespace Logic
         public abstract void GetShopData(out string shopName, out string homeTown, out string street, out int formed, out bool active, out string transaction);
         public abstract void SetShopData(string shopName, string homeTown, string street, int formed, bool active);
         public abstract bool checkTransaction(List<int> ids);
+        public abstract bool TryLock();
+        public abstract void Unlock();
     }
 }

@@ -21,11 +21,17 @@ namespace PresentationServer
         }
         protected override void OnMessage(MessageEventArgs e)
         {
-            Console.WriteLine("Recieved: " + e.Data + "\n");
-            List<int> ids = new List<int>();
-            ids = JsonConvert.DeserializeObject<List<int>>(e.Data);
-            
-            if(_serverinst.logicLayer.checkTransaction(ids))
+            ResolveTransaction(e.Data);
+        }
+
+        public void ResolveTransaction(string data)
+        {
+            Console.WriteLine("Recieved: " + data + "\n");
+            List<int> ids = JsonConvert.DeserializeObject<List<int>>(data);
+
+            while (_serverinst.logicLayer.TryLock()) { }
+
+            if (_serverinst.logicLayer.checkTransaction(ids))
             {
                 foreach (int id in ids)
                 {
@@ -39,9 +45,13 @@ namespace PresentationServer
             }
 
             Console.WriteLine("Sent: " + _serverinst.message + "\n");
+
+            //add the send to the event handler of someone queuing the messages
             Send(_serverinst.message);
+            _serverinst.logicLayer.Unlock();
         }
     }
+
     internal class ServerBroadcast : WebSocketBehavior
     {
         private Server _serverinst;
@@ -68,13 +78,15 @@ namespace PresentationServer
         
     }
 
-    internal class Server
+    public class Server
     {
         //internal static ILogicLayer logicLayer {get;set;}
         public ILogicLayer logicLayer {get;set;}
+        public event EventHandler ToSend;
         private ShopDTO shopData;
+        private WebSocketServer webSocketServer;
         internal string message {get; set;}
-        Server(ILogicLayer logicLayer)
+        public Server(ILogicLayer logicLayer, bool console)
         {
             this.logicLayer = logicLayer;
             products = new List<ProductDTO>();
@@ -83,24 +95,30 @@ namespace PresentationServer
             UpdateData(logicLayer, "update");
             message = JsonConvert.SerializeObject(sendShop);
 
-            WebSocketServer webSocketServer = new WebSocketServer("ws://127.0.0.1:5000");
+            webSocketServer = new WebSocketServer("ws://127.0.0.1:5000");
             webSocketServer.AddWebSocketService<ServerInit>("/ServerInit", () => new ServerInit(this));
             webSocketServer.AddWebSocketService<ServerBroadcast>("/ServerBroadcast", () => new ServerBroadcast(this));
             //ServerBroadcast broadcast = new ServerBroadcast(this);
             //Update(broadcast);
             webSocketServer.Start();
-            Console.WriteLine("Server started on ws://127.0.0.1:5000");
-            Console.ReadKey();
-            webSocketServer.Stop();
+            if (console)
+            {
+                Console.WriteLine("Server started on ws://127.0.0.1:5000");
+                Console.ReadKey();
+                webSocketServer.Stop();
+            }
         }
 
 
         static async Task Main()
         {
             ILogicLayer logicLayer = ILogicLayer.CreateLogicLayer();
-            Server server = new Server(logicLayer);
+            Server server = new Server(logicLayer, true);
+        }
 
-
+        public void StopServer()
+        {
+            webSocketServer.Stop();
         }
 
         private void WebSocket_OnMessage(object? sender, MessageEventArgs e)
@@ -127,7 +145,7 @@ namespace PresentationServer
             sendShop.products = GetGames();
         }
 
-        public List<ProductDTO> GetGames()
+        internal List<ProductDTO> GetGames()
         {
             List<ProductDTO> games = new List<ProductDTO>();
             foreach (int iter in productIDS)
@@ -138,7 +156,7 @@ namespace PresentationServer
             return games;
         }
 
-        private List<ProductDTO> products { get; set; }
+        internal List<ProductDTO> products { get; set; }
         private List<int> productIDS { get; set; }
         private ShopDTO sendShop { get; set; }
     }

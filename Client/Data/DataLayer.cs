@@ -32,6 +32,13 @@ namespace ClientData
             DrawData();
         }
 
+        public DataLayer(bool observe)
+        {
+            observers = new List<IObserver<Product>>();
+            shopData = new ShopData();
+            DrawData();
+        }
+
         public override void DrawData()
         {
             if (!initialDataDrawn)
@@ -71,7 +78,7 @@ namespace ClientData
             shopData = JsonConvert.DeserializeObject<ShopData>(e.Data);
             if (observers.Count() == 0)
             {
-                ItemsChanged.Invoke(this, e);
+                ItemsChanged?.Invoke(this, e);
             }
             else
             {

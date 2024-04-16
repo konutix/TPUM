@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +11,8 @@ namespace Logic
     internal class LogicLayer : ILogicLayer
     {
         private IDataLayer Data { get; }
-
+        private static readonly object padlock = new object();
+        private bool Locked = false;
         public LogicLayer(IDataLayer data)
         {
             Data = data;
@@ -117,6 +119,26 @@ namespace Logic
             }
 
             return valid;
+        }
+        public bool TryLock()
+        {
+            lock (padlock)
+            {
+                if (Locked)
+                {
+                    return true;
+                }
+                else
+                {
+                    Locked = true;
+                    return false;
+                }
+            }
+        }
+
+        public void Unlock()
+        {
+            Locked = false;
         }
     }
 }
