@@ -7,23 +7,40 @@ using Logic;
 
 namespace PresentationServer
 {
-    internal class ProductDTO
+    internal class ProductDTO : IProductDTO 
     {
+        public ProductDTO()
+        {
+
+        }
         public ProductDTO(int id, string name, float price, int quantity, string platform, string genre)
         {
-            ID = id;
-            Name = name;
-            Price = price;
-            Quantity = quantity;
-            Platform = platform;
-            Genre = genre;
+            this.id = id;
+            this.quantity = quantity;
+            this.name = name;
+            this.price = price;
+            this.platform = platform;
+            this.genre = genre;
         }
 
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public float Price { get; set; }
-        public int Quantity { get; set; }
-        public string Platform { get; set; }
-        public string Genre { get; set; }
+        public int id;
+        public int quantity;
+        public string name;
+        public float price;
+        public string platform;
+        public string genre;
+    }
+    public abstract class IProductDTO
+    {
+        public static IProductDTO CreateProduct(int id, string name, float price, int quantity, string platform, string genre)
+        {
+            return new ProductDTO(id, name, price, quantity, platform, genre);
+        }
+        public new int id { get; set; }
+        public new int quantity { get; set; }
+        public new string name { get; set; }
+        public new float price { get; set; }
+        public new string platform { get; set; }
+        public new string genre { get; set; }
     }
 }

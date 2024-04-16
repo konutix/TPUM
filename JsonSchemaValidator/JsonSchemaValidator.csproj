@@ -11,4 +11,9 @@
     <PackageReference Include="NJsonSchema" Version="11.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Client\Data\DataClient.csproj" />
+    <ProjectReference Include="..\Server\Model\PresentationServer.csproj" />
+  </ItemGroup>
+
 </Project>

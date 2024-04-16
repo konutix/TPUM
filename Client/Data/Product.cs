@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClientData
 {
-    internal class Product
+    internal class Product : IProduct
     {
         public Product()
         {
@@ -23,11 +23,24 @@ namespace ClientData
             this.genre = genre;
         }
 
-        public int id { get; set; }
-        public int quantity { get; set; }
-        public string name { get; set; }
-        public float price { get; set; }
-        public string platform { get; set; }
-        public string genre { get; set; }
+        public int id;
+        public int quantity;
+        public string name;
+        public float price;
+        public string platform;
+        public string genre; 
+    }
+    public abstract class IProduct
+    {
+        public static IProduct CreateProduct(int id, string name, float price, int quantity, string platform, string genre)
+        {
+            return new Product(id, name, price, quantity, platform, genre);
+        }
+        public new int id { get; set; }
+        public new int quantity { get; set; }
+        public new string name { get; set; }
+        public new float price { get; set; }
+        public new string platform { get; set; }
+        public new string genre { get; set; }
     }
 }

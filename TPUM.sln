@@ -39,7 +39,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelClient", "Client\Model
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicServer", "Server\Logic\LogicServer.csproj", "{E77A1042-DDFF-4770-9BBA-E180E2BBB5DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonSchemaValidator", "JsonSchemaValidator\JsonSchemaValidator.csproj", "{15E32AE6-4202-4929-A861-8738603F0199}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonSchemaValidator", "JsonSchemaValidator\JsonSchemaValidator.csproj", "{15E32AE6-4202-4929-A861-8738603F0199}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AACF45B1-6DF9-4456-8E7B-20DDE6A55113} = {AACF45B1-6DF9-4456-8E7B-20DDE6A55113}
+		{B2D5C281-7221-471F-985B-893D4A9CF7A8} = {B2D5C281-7221-471F-985B-893D4A9CF7A8}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
