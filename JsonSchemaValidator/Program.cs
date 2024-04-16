@@ -7,6 +7,7 @@ using Namotion.Reflection;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Xml.Linq;
+using NJsonSchema.CodeGeneration.CSharp;
 
 namespace JsonSchemaValidator
 {
@@ -42,6 +43,15 @@ namespace JsonSchemaValidator
 
             Console.WriteLine(serverVal);
             Console.WriteLine(clientVal);
+            if (serverVal==clientVal)
+            {
+                var generator = new CSharpGenerator(schemaClient);
+                var classFile= generator.GenerateFile();
+                using (StreamWriter outputFile = new StreamWriter(Path.Combine("../../..", "Result.cs")))
+                { 
+                        outputFile.WriteLine(classFile);
+                }
+            }
         }
     }
 
